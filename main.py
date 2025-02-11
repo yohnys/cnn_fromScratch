@@ -1,7 +1,5 @@
-
-
 import numpy as np
-from layers import BatchNorm, BatchNorm2D, Conv2D, Dense, Dropout, Flatten, LeakyReLU, MaxPool2D, Model, SoftmaxCrossEntropy
+from layers import Model
 from utils import SEED, generate_predictions_and_save, get_X_from_csv, load_data
 from layer_arch import layers2,layers1
 
