@@ -88,41 +88,22 @@ def col2im(col, X_shape, k):
 
 
 def load_data(csv_file):
+    
     data = np.loadtxt(csv_file, delimiter=',')
-    labels = data[:, 0].astype(int)
+    labels = data[:, 0].astype(int)   
     raw_features = data[:, 1:].astype(float)
     features = raw_features.reshape(-1, 3, 32, 32)
-    # Transform each sample from [0, 1] to [-1, 1]
-    features = features * 2 - 1
     num_classes = 10
     one_hot_labels = np.eye(num_classes)[labels - 1]
     return features, one_hot_labels
-
-def augment_data(features : np.ndarray, one_hot_labels : np.ndarray):
-    new_features = []
-    new_labels = []
-    for i, image in enumerate(features):
-        rotated = rotate_image(image)
-        new_features.extend(rotated)
-        new_labels.extend([one_hot_labels[i]]*4)
-    return np.array(new_features), np.array(new_labels)
-
-# returns 4 images, in each orientation
-def rotate_image(image : np.ndarray):
-    res = [image]
-    new_image = image
-    for i in range(3):
-        new_image = np.rot90(new_image, k=1, axes=(1, 2))
-        res.append(new_image)
-    return res
-
 
 def get_X_from_csv(csv_file):
     data = np.loadtxt(csv_file, delimiter=',', dtype=str)
     raw_features = data[:, 1:].astype(float)
     features = raw_features.reshape(-1, 3, 32, 32)
-    features = features * 2 - 1
+
     return features
+
 
 def generate_predictions_and_save(model, test_data, output_file="output.txt"):
    
